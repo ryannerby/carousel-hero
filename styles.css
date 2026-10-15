@@ -180,19 +180,19 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 /* The character. Body layer with a hole where the head goes + one head crop per gaze,
    after Carousel's Pile Lady (see brand-study/BRAND-STUDY.md, Interaction layer). The head
    box is in % of the figure, read from assets/lady/states.json, so it tracks any size. */
-/* .visual is a size container: she is sized from BOTH its height and width (min(100cqh, 130cqw);
-   her aspect is 0.75), so she shrinks smoothly as the window narrows instead of jumping, and is
-   never wider than her column. Phones: a capped band under the copy, centred. */
-.visual { position: relative; container-type: size; height: min(52svh, 460px); margin-top: -28px; } /* phone: tucked up under the copy (her frame has backdrop above the hair) */
+/* The figure is ONE photo: her on a wide mound of folders (landscape, 2352x1776). Desktop: .visual is a
+   size container; the figure is up to 1.6x the column wide (min(100cqh, 121cqw)), anchored right and pushed
+   8% past the edge, so the mound runs off the screen on the right and fades out under the copy on the
+   left, while she stays inside the column. Phones: full width, mound edge to edge. */
+.visual { position: relative; aspect-ratio: 1; margin-top: -8px; }
 .lady {
-  position: absolute; bottom: 0; left: 50%;
-  height: min(100cqh, 130cqw); aspect-ratio: 1728 / 2304;
-  transform: translateX(-56%);
+  position: absolute; bottom: 0; left: 50%; height: 100%;
+  aspect-ratio: 2352 / 1776; transform: translateX(-50%); /* phone: zoomed ~1.3x, mound trimmed at the sides */
   perspective: 1400px;
 }
 @media (min-width: 860px) {
-  .visual { height: 100%; margin-top: 0; }
-  .lady { left: auto; right: 2%; transform: none; }
+  .visual { container-type: size; aspect-ratio: auto; height: 100%; margin-top: 0; }
+  .lady { left: auto; right: 0; height: min(100cqh, 121cqw); transform: translateX(8%); }
 }
 .lady-tilt {
   position: absolute; inset: 0;
@@ -201,7 +201,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   will-change: transform;
 }
 .lady-body { position: absolute; inset: 0; width: 100%; height: 100%; }
-.lady-head { position: absolute; left: 17.824%; top: 4.774%; width: 41.667%; height: 49.479%; } /* from assets/lady/states.json */
+.lady-head { position: absolute; left: 28.571%; top: 6.194%; width: 34.014%; height: 59.122%; } /* from assets/lady/states.json */
 .lady-head img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 .lady-head img.is-on { opacity: 1; } /* hard cut, as Carousel's: the tilt carries the motion */
 .lady img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
@@ -384,4 +384,10 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 
 /* Short desktop windows: the quote + laurel is the first thing to go, never the CTA.
    (Kept at the end of the file: an earlier copy was silently overridden by .proof's own rule.) */
-@media (min-width: 860px) and (max-height: 680px) { .proof { display: none; } }
+@media (min-width: 860px) and (max-height: 740px) { .proof { display: none; } }
+
+
+/* The mound reaches about 20% up the figure under the copy column: keep the text above it. */
+@media (min-width: 860px) {
+  .copy { padding-bottom: clamp(56px, calc((100svh - var(--nav-h) - var(--tick-h)) * 0.19), 160px); }
+}

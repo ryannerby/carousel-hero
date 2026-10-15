@@ -195,7 +195,7 @@ if (canTrack) {
   addEventListener("pointermove", e => {
     if (!inView || e.pointerType !== "mouse") return;
     const r = lady.querySelector(".lady-head").getBoundingClientRect();
-    const fx = r.left + r.width * 0.64, fy = r.top + r.height * 0.28; // her face within the taller head box
+    const fx = r.left + r.width * 0.506, fy = r.top + r.height * 0.267; // her face within the taller head box
     const px = e.clientX - fx, py = e.clientY - fy;
     const dx = px / innerWidth, dy = py / innerHeight;
     look(zone(px, py));
