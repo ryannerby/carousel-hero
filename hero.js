@@ -141,6 +141,12 @@ if (deal && !reduceMotion && "IntersectionObserver" in window) {
 }
 
 /* ---------- 3. character: gaze + wink ---------- */
+// Each head comes in 1x (1200px figure) and 2x (full 2352px) so her face stays sharp on retina screens,
+// as Carousel serves their hero in several densities.
+function setHead(img, name) {
+  img.srcset = `assets/lady/head-${name}.webp 1x, assets/lady/2x/head-${name}.webp 2x`;
+  img.src = `assets/lady/head-${name}.webp`;
+}
 const lady = $("[data-slot=lady]");
 const heads = Object.fromEntries($$(".lady-head img").map(img => [img.dataset.gaze, img]));
 let gaze = "centre", winking = false;
@@ -162,7 +168,7 @@ const canTrack = lady && !reduceMotion && matchMedia("(hover: hover) and (pointe
 if (canTrack) {
   // Load the other heads only once the page is idle, so they never compete with first paint.
   const loadHeads = () => Object.entries(heads).forEach(([name, img]) => {
-    if (name !== "centre" && !img.src) img.src = `assets/lady/head-${name}.webp`;
+    if (name !== "centre" && !img.src) setHead(img, name);
   });
   addEventListener("load", () => ("requestIdleCallback" in window ? requestIdleCallback(loadHeads) : setTimeout(loadHeads, 300)));
 
@@ -201,7 +207,7 @@ if (canTrack) {
    on every device (one ~25 KB file), only the gaze heads are desktop-only. No bounce. */
 if (lady && !reduceMotion) {
   const wink = heads.WINK;
-  const fetchWink = () => { if (!wink.src) wink.src = "assets/lady/head-WINK.webp"; };
+  const fetchWink = () => { if (!wink.src) setHead(wink, "WINK"); };
   addEventListener("load", () => setTimeout(fetchWink, 200));
   let winkT = 0;
   addEventListener("pointerdown", () => {

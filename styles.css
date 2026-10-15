@@ -19,9 +19,11 @@
 
   /* Type scales with BOTH width and height, so a short window shrinks the copy instead of
      pushing the ticker off the fold. */
-  --h1: clamp(34px, min(4.4vw, 7.2vh), 64px);
-  --lede: clamp(16px, min(1.5vw, 2.5vh), 21px);
-  --nav-h: 70px;
+  /* Sized to Carousel's auto-finance hero (measured 2026-10-15): H1 62px desktop / 27px phone, 2 lines,
+     no long subhead, 16px buttons 48px tall, 57px nav. Height-aware so short windows shrink too. */
+  --h1: clamp(28px, min(4.3vw, 7.4vh), 62px);
+  --lede: clamp(15px, min(1.2vw, 2.1vh), 17px);
+  --nav-h: 57px;
   --tick-h: 46px;
   --gut: clamp(16px, 4vw, 48px);
   --wrap: 1240px;
@@ -57,7 +59,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .nav-link { font-size: 15px; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
 @media (max-width: 480px) { .nav-link { display: none; } }
 .btn-pill {
-  display: inline-flex; align-items: center; height: 38px; padding: 0 18px;
+  display: inline-flex; align-items: center; height: 36px; padding: 0 18px;
   border-radius: 999px; background: var(--ink); color: var(--bg);
   font-size: 15px; font-weight: 600; text-decoration: none;
 }
@@ -127,18 +129,18 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 
 .sub {
-  margin: 20px 0 0; max-width: 32rem;
+  margin: clamp(10px, 1.8vh, 18px) 0 0; max-width: 30rem;
   font-size: var(--lede); line-height: 1.45; color: var(--ink-soft); text-wrap: pretty;
 }
 
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: clamp(18px, 3.6vh, 32px); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: clamp(14px, 2.6vh, 26px); }
 
 /* Chunky keyboard-key button, Carousel's closing-CTA treatment */
 .btn-key {
   display: inline-flex; align-items: center; gap: 10px;
-  height: 54px; padding: 0 26px; border-radius: 14px;
+  height: 48px; padding: 0 22px; border-radius: 14px;
   background: var(--black); color: #fff;
-  font-size: 17px; font-weight: 500; text-decoration: none;
+  font-size: 16px; font-weight: 500; text-decoration: none;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 3px 0 #000, 0 14px 24px -12px rgba(0,0,40,.6);
   transition: transform 120ms ease, box-shadow 120ms ease;
 }

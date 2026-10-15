@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
-  <link rel="preload" as="image" href="assets/lady/body.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/lady/head-centre.webp">
+  <link rel="preload" as="image" href="assets/lady/body.webp" imagesrcset="assets/lady/body.webp 1x, assets/lady/2x/body.webp 2x" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/lady/head-centre.webp" imagesrcset="assets/lady/head-centre.webp 1x, assets/lady/2x/head-centre.webp 2x">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -30,14 +30,14 @@
         <p class="tag"><span data-slot="tag">For dealer F&amp;I</span></p>
 
         <h1 class="headline" id="headline">
-          <span class="line" data-slot="lead">Clear the stips</span>
-          <span class="line">while they
+          <span class="line"><span data-slot="lead">Clear the stips</span> while they</span>
+          <span class="line">
             <span class="rotor" aria-hidden="true"><span class="rotor-clip" data-slot="rotor"><em class="is-on">scan their ID</em><em>connect their bank</em><em>prove their address</em><em>confirm their job</em><em>sign the consent</em></span></span>
             <span class="visually-hidden" data-slot="rotor-said">scan their ID, connect their bank, prove their address, confirm their job and sign the consent</span>
           </span>
         </h1>
 
-        <p class="sub" data-slot="sub">Your buyer verifies ID, income and credit on their own phone, right at your desk. You send the lender one decision-ready file before they leave the lot.</p>
+        <p class="sub" data-slot="sub">Your buyer verifies on their own phone. You send the lender one decision-ready file.</p>
 
         <div class="actions">
           <a class="btn-key" href="https://oncarousel.com/book-a-demo/" data-slot="cta" data-event="book_demo_click">Book a demo <span class="arrow" aria-hidden="true">→</span></a>
@@ -62,10 +62,10 @@
       <div class="visual" data-slot="visual">
         <div class="lady" data-slot="lady">
           <div class="lady-tilt">
-            <img class="lady-body" data-slot="image" src="assets/lady/body.webp" width="1200" height="906"
+            <img class="lady-body" data-slot="image" src="assets/lady/body.webp" srcset="assets/lady/body.webp 1x, assets/lady/2x/body.webp 2x" width="1200" height="907"
                  alt="A 1980s finance manager in an electric blue power suit sits on a wide mound of manila deal folders, on a brick phone, giving a thumbs-up.">
             <div class="lady-head" aria-hidden="true">
-              <img data-gaze="centre" class="is-on" src="assets/lady/head-centre.webp" alt="">
+              <img data-gaze="centre" class="is-on" src="assets/lady/head-centre.webp" srcset="assets/lady/head-centre.webp 1x, assets/lady/2x/head-centre.webp 2x" alt="">
               <img data-gaze="G1" alt="">
               <img data-gaze="G2" alt="">
               <img data-gaze="G4" alt="">

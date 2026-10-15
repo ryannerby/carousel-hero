@@ -10,7 +10,7 @@ export const VERTICALS = {
     lead: "Clear the stips",
     rotate: ["scan their ID", "connect their bank", "prove their address", "confirm their job", "sign the consent"],
     keys: ["ID", "Bank", "Address", "Job", "Credit"], // one keycap per phrase, same order
-    sub: "Your buyer verifies ID, income and credit on their own phone, right at your desk. You send the lender one decision-ready file before they leave the lot.",
+    sub: "Your buyer verifies on their own phone. You send the lender one decision-ready file.",
     cta: { label: "Book a demo", href: "https://oncarousel.com/book-a-demo/" },
     secondary: { label: "See a sample report", href: "https://oncarousel.com/assets/sample/screening-report-example.pdf" },
     quote: {
@@ -27,7 +27,7 @@ export const VERTICALS = {
     lead: "Approve the tenant",
     rotate: ["scan their ID", "connect the business bank", "prove the address", "confirm the business", "consent to credit"],
     keys: ["ID", "Bank", "Address", "Business", "Credit"],
-    sub: "The applicant proves who they are and what the business earns from their phone, in one sitting. Your credit desk reads one report instead of chasing statements.",
+    sub: "The applicant verifies from their phone. Your credit desk reads one report.",
     cta: { label: "Book a demo", href: "https://oncarousel.com/book-a-demo/" },
     secondary: { label: "See a sample report", href: "https://oncarousel.com/assets/sample/screening-report-example.pdf" },
     quote: {
