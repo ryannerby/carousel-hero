@@ -41,14 +41,30 @@ function render() {
 if (slug !== DEFAULT_VERTICAL) render();
 
 /* ---------- 2. rotating phrase + keycaps ---------- */
+const rotor = $(".rotor"); // the underline lives here; the phrases live in [data-slot=rotor] (the clip)
 const phrases = $$("[data-slot=rotor] em");
+// underline starts at the first phrase's width (fonts can change widths once loaded)
+const fitLine = () => rotor.style.setProperty("--uw", phrases[current].offsetWidth + "px");
+document.fonts?.ready.then(fitLine); addEventListener("resize", fitLine);
 const keys = $$(".key");
 let current = 0, timer = 0, held = false;
 
+const outTimers = new Map();
 function show(i) {
-  phrases[current].classList.remove("is-on");
+  if (i === current) return;
+  const prev = phrases[current], next = phrases[i];
+  // old phrase rolls up and out, then parks below again (instantly, while clipped)
+  prev.classList.remove("is-on");
+  prev.classList.add("is-out");
+  clearTimeout(outTimers.get(prev));
+  outTimers.set(prev, setTimeout(() => prev.classList.remove("is-out"), 300));
+  // new phrase: make sure it starts from the parked position below, then roll it in
+  clearTimeout(outTimers.get(next));
+  next.classList.remove("is-out");
+  void next.offsetWidth;
+  next.classList.add("is-on");
   current = i;
-  phrases[current].classList.add("is-on");
+  rotor.style.setProperty("--uw", next.offsetWidth + "px");
   keys.forEach((k, n) => k.setAttribute("aria-pressed", String(n === current)));
 }
 function start() {

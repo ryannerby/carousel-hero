@@ -90,19 +90,28 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .headline .line { display: block; }
 .headline em { font-style: italic; }
 
-/* Rotating italic phrase. All phrases share one grid cell, so the box is always the
-   width of the longest one and nothing shifts while it cycles (no layout shift). */
-.rotor { display: inline-grid; vertical-align: bottom; }
-.rotor em { grid-area: 1 / 1; white-space: nowrap; opacity: 0; transform: translateY(0.35em); }
-.rotor em.is-on { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: no-preference) {
-  .rotor em { transition: opacity 360ms ease, transform 420ms cubic-bezier(.2,.7,.2,1); }
+/* Rotating italic phrase: a slot roll, not a cross-fade. The words roll inside .rotor-clip
+   (overflow hidden); the outgoing phrase rolls up and out, the incoming one rolls up from below.
+   No opacity at any point, so two phrases are never seen on top of each other.
+   The underline lives OUTSIDE the clip, below its bottom edge, so rising words never cross it,
+   and it just changes width (--uw, set in JS) to fit the live phrase.
+   All phrases share one grid cell: the box is always as wide as the longest one, no layout shift. */
+.rotor { position: relative; display: inline-block; vertical-align: bottom; padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.rotor-clip {
+  display: inline-grid; overflow: hidden; vertical-align: bottom;
+  padding: 0.04em 0.14em 0.03em 0; margin: -0.04em -0.14em -0.03em 0; /* italic overhang + 'g' descender */
 }
-/* Blue underline under the live phrase only, sized to that phrase */
-.rotor em { position: relative; justify-self: start; }
-.rotor em::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -0.06em; height: 0.08em;
-  background: var(--acc); border-radius: 2px;
+.rotor-clip em { grid-area: 1 / 1; white-space: nowrap; justify-self: start; transform: translateY(170%); }
+.rotor-clip em.is-on  { transform: none; }
+.rotor-clip em.is-out { transform: translateY(-170%); }
+.rotor::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 0.08em;
+  width: var(--uw, 100%); background: var(--acc); border-radius: 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rotor-clip em.is-on  { transition: transform 400ms cubic-bezier(.2,.8,.2,1) 230ms; } /* waits for the old phrase to leave */
+  .rotor-clip em.is-out { transition: transform 220ms cubic-bezier(.5,0,.8,.4); }
+  .rotor::after { transition: width 420ms cubic-bezier(.2,.8,.2,1) 120ms; }
 }
 
 .sub {
