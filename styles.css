@@ -33,6 +33,7 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; /* as oncarousel.com: thinner strokes on macOS */
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
@@ -99,7 +100,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .headline {
   margin: 0;
   font-family: var(--serif); font-weight: 400;
-  font-size: var(--h1); line-height: 1.02; letter-spacing: -0.02em;
+  font-size: var(--h1); line-height: 1.02; letter-spacing: -0.02em; font-weight: 420;
 }
 .headline .line { display: block; }
 .headline em { font-style: italic; }
@@ -119,7 +120,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .rotor-clip em.is-on  { transform: none; }
 .rotor-clip em.is-out { transform: translateY(-170%); }
 .rotor::after {
-  content: ""; position: absolute; left: 0; bottom: 0; height: 0.08em;
+  content: ""; position: absolute; left: 0; bottom: 0.02em; height: max(2px, 0.04em);
   width: var(--uw, 100%); background: var(--acc); border-radius: 2px;
 }
 @media (prefers-reduced-motion: no-preference) {
