@@ -43,6 +43,6 @@ Reused from oncarousel.com, unchanged: the wordmark, favicon, keycap art and the
 
 Generated for this page: the character and all her gaze frames (Seedream 5.0 Pro via kie.ai), the approval stamp (GPT Image 2.5). Names, deal numbers and the vehicle in the deal card are fictional. Carousel is a verification platform, not a lender.
 
-## QA
+## QA and AI log
 
-See `QA.md`.
+See `QA.md` and `SUBMISSION.md`.
