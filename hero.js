@@ -144,7 +144,8 @@ if (deal && !reduceMotion && "IntersectionObserver" in window) {
 // Each head comes in 1x (1200px figure) and 2x (full 2352px) so her face stays sharp on retina screens,
 // as Carousel serves their hero in several densities.
 function setHead(img, name) {
-  img.srcset = `assets/lady/head-${name}.webp 1x, assets/lady/2x/head-${name}.webp 2x`;
+  img.sizes = "(max-width: 859px) 46vw, 26vw"; // the head box is ~34% of the figure
+  img.srcset = `assets/lady/head-${name}.webp 408w, assets/lady/2x/head-${name}.webp 800w`;
   img.src = `assets/lady/head-${name}.webp`;
 }
 const lady = $("[data-slot=lady]");

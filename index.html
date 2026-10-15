@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
-  <link rel="preload" as="image" href="assets/lady/body.webp" imagesrcset="assets/lady/body.webp 1x, assets/lady/2x/body.webp 2x" fetchpriority="high">
-  <link rel="preload" as="image" href="assets/lady/head-centre.webp" imagesrcset="assets/lady/head-centre.webp 1x, assets/lady/2x/head-centre.webp 2x">
+  <link rel="preload" as="image" href="assets/lady/body.webp" imagesrcset="assets/lady/body.webp 1200w, assets/lady/2x/body.webp 2352w" imagesizes="(max-width: 859px) 135vw, 75vw" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/lady/head-centre.webp" imagesrcset="assets/lady/head-centre.webp 408w, assets/lady/2x/head-centre.webp 800w" imagesizes="(max-width: 859px) 46vw, 26vw">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -62,10 +62,10 @@
       <div class="visual" data-slot="visual">
         <div class="lady" data-slot="lady">
           <div class="lady-tilt">
-            <img class="lady-body" data-slot="image" src="assets/lady/body.webp" srcset="assets/lady/body.webp 1x, assets/lady/2x/body.webp 2x" width="1200" height="907"
+            <img class="lady-body" data-slot="image" src="assets/lady/body.webp" srcset="assets/lady/body.webp 1200w, assets/lady/2x/body.webp 2352w" sizes="(max-width: 859px) 135vw, 75vw" fetchpriority="high" width="1200" height="907"
                  alt="A 1980s finance manager in an electric blue power suit sits on a wide mound of manila deal folders, on a brick phone, giving a thumbs-up.">
             <div class="lady-head" aria-hidden="true">
-              <img data-gaze="centre" class="is-on" src="assets/lady/head-centre.webp" srcset="assets/lady/head-centre.webp 1x, assets/lady/2x/head-centre.webp 2x" alt="">
+              <img data-gaze="centre" class="is-on" src="assets/lady/head-centre.webp" srcset="assets/lady/head-centre.webp 408w, assets/lady/2x/head-centre.webp 800w" sizes="(max-width: 859px) 46vw, 26vw" alt="">
               <img data-gaze="G1" alt="">
               <img data-gaze="G2" alt="">
               <img data-gaze="G4" alt="">
@@ -118,27 +118,27 @@
           </header>
           <div class="tray" role="group" aria-label="Checks the buyer completes">
               <button class="key key-cream" type="button" data-key="0" aria-pressed="true" aria-controls="headline deal-receipt">
-                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-cream.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-1.4 1.7-2 3-2s2.4.6 3 2M14 10h4M14 13h3"/></svg></span>
+                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-cream.webp" alt="" width="112" height="118" decoding="async"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-1.4 1.7-2 3-2s2.4.6 3 2M14 10h4M14 13h3"/></svg></span>
                 <span class="led" aria-hidden="true"></span>
                 <span class="key-label">ID</span>
               </button>
               <button class="key key-gold" type="button" data-key="1" aria-pressed="false" aria-controls="headline deal-receipt">
-                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-gold.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3.5 20h17"/></svg></span>
+                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-gold.webp" alt="" width="112" height="119" decoding="async"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3.5 20h17"/></svg></span>
                 <span class="led" aria-hidden="true"></span>
                 <span class="key-label">Bank</span>
               </button>
               <button class="key key-orange" type="button" data-key="2" aria-pressed="false" aria-controls="headline deal-receipt">
-                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-orange.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
+                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-orange.webp" alt="" width="112" height="117" decoding="async"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
                 <span class="led" aria-hidden="true"></span>
                 <span class="key-label">Address</span>
               </button>
               <button class="key key-cream" type="button" data-key="3" aria-pressed="false" aria-controls="headline deal-receipt">
-                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-cream.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M9 7.5V5.6c0-.9.7-1.6 1.6-1.6h2.8c.9 0 1.6.7 1.6 1.6v1.9M3 12.5h18"/></svg></span>
+                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-cream.webp" alt="" width="112" height="118" decoding="async"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M9 7.5V5.6c0-.9.7-1.6 1.6-1.6h2.8c.9 0 1.6.7 1.6 1.6v1.9M3 12.5h18"/></svg></span>
                 <span class="led" aria-hidden="true"></span>
                 <span class="key-label">Job</span>
               </button>
               <button class="key key-ink" type="button" data-key="4" aria-pressed="false" aria-controls="headline deal-receipt">
-                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-ink.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><path d="M4.5 16a7.5 7.5 0 1 1 15 0"/><path d="m12 16 4-4.5"/><circle cx="12" cy="16" r="1.3"/></svg></span>
+                <span class="cap" aria-hidden="true"><img src="assets/carousel/key-ink.webp" alt="" width="112" height="117" decoding="async"><svg viewBox="0 0 24 24"><path d="M4.5 16a7.5 7.5 0 1 1 15 0"/><path d="m12 16 4-4.5"/><circle cx="12" cy="16" r="1.3"/></svg></span>
                 <span class="led" aria-hidden="true"></span>
                 <span class="key-label">Credit</span>
               </button>

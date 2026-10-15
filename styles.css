@@ -10,7 +10,7 @@
   --line-2: #ded9cf;
   --black: #14120f;
   --acc: #2f55ff;
-  --gold: #a8863a;
+  --gold: #8a6b24; /* Carousel's dark foil stop; #a8863a failed contrast (3.2:1) on small text, this is 4.7:1 */
   --green-bg: #e5f2ea;
 
   --serif: "Newsreader", Georgia, serif;
