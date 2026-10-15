@@ -45,7 +45,7 @@ Headline stays on the first phrase. Deal card shows the finished file ("Sent to 
 
 ## Real device
 
-Pending: iPhone check on the live link.
+iPhone, Safari, on the live link (2026-10-15, 18:15): hero centred, Book a demo above the fold, character and mound below, ticker, deal card completing with the stamp, no sideways scroll. One fix came from it: the card's status pill squeezed the buyer's name onto two lines; below 520px it now drops under the name.
 
 ## Known issues, not fixed
 

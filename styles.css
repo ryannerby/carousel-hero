@@ -411,3 +411,10 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   .rotor-clip em { justify-self: center; }
   .rotor::after { left: 50%; translate: -50% 0; }
 }
+
+/* Phones: the status pill squeezed the buyer's name onto two lines (seen on a real iPhone).
+   Below 520px the pill drops under the name, aligned with it. */
+@media (max-width: 520px) {
+  .deal-head { flex-wrap: wrap; row-gap: 8px; }
+  .deal-status { margin-left: 51px; order: 3; }
+}
