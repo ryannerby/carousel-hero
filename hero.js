@@ -37,6 +37,7 @@ function render() {
   $("[data-slot=quote]").textContent = `“${v.quote.text}”`;
   $("[data-slot=quote-who]").textContent = v.quote.who;
   if (!v.character) document.documentElement.classList.add("no-image");
+  if (!v.deal) document.documentElement.classList.add("no-deal");
 }
 if (slug !== DEFAULT_VERTICAL) render();
 
@@ -51,6 +52,7 @@ let current = 0, timer = 0, held = false;
 
 const outTimers = new Map();
 function show(i) {
+  keys.forEach((k, n) => k.setAttribute("aria-pressed", String(n === i)));
   if (i === current) return;
   const prev = phrases[current], next = phrases[i];
   // old phrase rolls up and out, then parks below again (instantly, while clipped)
@@ -67,22 +69,66 @@ function show(i) {
   rotor.style.setProperty("--uw", next.offsetWidth + "px");
   keys.forEach((k, n) => k.setAttribute("aria-pressed", String(n === current)));
 }
+/* The deal card follows the same step counter as the headline: keys before the current step have
+   a green light and a "Verified" row, the current key is pressed and its row reads "In progress".
+   After the last step the file completes: every light green, status Decision-ready, the stamp
+   drops and leaves a blue check, then the cycle starts over on a fresh file. */
+const deal = $(".deal");
+const rows = $$(".rc-rows li");
+const status = $("[data-slot=status] span");
+const fileStatus = $("[data-slot=file-status]");
+const bar = $("[data-slot=progress]");
+let done = false;
+
+function paintCard(step, complete) {
+  done = complete;
+  keys.forEach((k, n) => k.classList.toggle("is-done", complete || n < step));
+  rows.forEach((r, n) => {
+    const v = r.querySelector(".r-val");
+    const isDone = complete || n < step, isNow = !complete && n === step;
+    r.classList.toggle("is-done", isDone);
+    r.classList.toggle("is-now", isNow);
+    v.textContent = isDone ? v.dataset.pending : isNow ? "In progress" : "Waiting";
+  });
+  bar?.style.setProperty("--p", (complete ? 100 : step / keys.length * 100) + "%");
+  deal?.classList.toggle("is-done", complete);
+  if (status) status.textContent = complete ? "Decision-ready" : "In progress";
+  if (fileStatus) fileStatus.textContent = complete ? "Sent to lender" : "Building";
+}
+
+function complete() {
+  paintCard(keys.length, true);
+  keys.forEach(k => k.setAttribute("aria-pressed", "false"));
+  if (!reduceMotion && deal) {
+    deal.classList.remove("is-stamping"); void deal.offsetWidth; deal.classList.add("is-stamping");
+  }
+}
+
+// One tick of the auto cycle: step 0..4, then a "complete" beat, then a fresh file.
+function tick() {
+  if (done) { deal?.classList.remove("is-stamping"); show(0); paintCard(0, false); return; }
+  if (current === keys.length - 1) { complete(); return; }
+  show(current + 1); paintCard(current, false);
+}
 function start() {
   if (reduceMotion || timer || held) return;
-  timer = setInterval(() => show((current + 1) % phrases.length), 2600);
+  timer = setInterval(tick, 2600);
 }
 function stop() { clearInterval(timer); timer = 0; }
 
 keys.forEach((k, i) => {
-  // Hover or focus holds the cycle on that key's phrase (Carousel's hero chips do the same).
-  const hold = () => { held = true; stop(); show(i); };
+  // Hover or focus holds the cycle on that key's step (Carousel's hero chips do the same).
+  const hold = () => { held = true; stop(); show(i); paintCard(i, false); };
   const release = () => { held = false; start(); };
   k.addEventListener("mouseenter", hold);
   k.addEventListener("focus", hold);
   k.addEventListener("mouseleave", release);
   k.addEventListener("blur", release);
-  k.addEventListener("click", () => { show(i); poke(); });
+  k.addEventListener("click", () => { show(i); paintCard(i, false); poke(); });
 });
+
+if (reduceMotion) complete(); // no motion: show the finished file, which says the most at a glance
+else paintCard(0, false);
 start();
 
 /* ---------- 3. character: gaze + tilt + wink ---------- */
@@ -153,21 +199,8 @@ if (canTrack) {
     aim(Math.max(-4, Math.min(4, -dy * 10)), Math.max(-7, Math.min(7, dx * 16)));
   }, { passive: true });
 
-  // Floating props: depth parallax, after Carousel's .fz-float (offset up to 30px x / 24px y, x depth).
-  const props = $$(".prop");
-  addEventListener("pointermove", e => {
-    if (!inView || e.pointerType !== "mouse") return;
-    const nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
-    props.forEach(p => {
-      const d = +p.dataset.depth || 1;
-      p.style.setProperty("--mx", (-nx * 30 * d).toFixed(1) + "px");
-      p.style.setProperty("--my", (-ny * 24 * d).toFixed(1) + "px");
-    });
-  }, { passive: true });
-
   document.documentElement.addEventListener("mouseleave", () => {
     look("centre"); aim(0, 0);
-    props.forEach(p => { p.style.removeProperty("--mx"); p.style.removeProperty("--my"); });
   });
 
   // Click on the hero (not on a link or button) and she winks.

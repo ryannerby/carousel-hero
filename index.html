@@ -31,25 +31,10 @@
         <h1 class="headline" id="headline">
           <span class="line" data-slot="lead">Clear the stips</span>
           <span class="line">while they
-            <span class="rotor" aria-hidden="true"><span class="rotor-clip" data-slot="rotor"><em class="is-on">scan their ID</em><em>connect their bank</em><em>sign the consent</em></span></span>
-            <span class="visually-hidden" data-slot="rotor-said">scan their ID, connect their bank and sign the consent</span>
+            <span class="rotor" aria-hidden="true"><span class="rotor-clip" data-slot="rotor"><em class="is-on">scan their ID</em><em>connect their bank</em><em>prove their address</em><em>confirm their job</em><em>sign the consent</em></span></span>
+            <span class="visually-hidden" data-slot="rotor-said">scan their ID, connect their bank, prove their address, confirm their job and sign the consent</span>
           </span>
         </h1>
-
-        <div class="keys" role="group" aria-label="What the buyer verifies">
-          <button class="key key-cream" type="button" data-key="0" aria-pressed="true" aria-controls="headline">
-            <span class="cap" aria-hidden="true"><img src="assets/carousel/key-cream.png" alt="" width="151" height="158" decoding="async"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M6 16c.6-1.6 1.7-2.4 3-2.4s2.4.8 3 2.4M14 10h4M14 13h3"/></svg></span>
-            <span class="key-label">ID</span>
-          </button>
-          <button class="key key-gold" type="button" data-key="1" aria-pressed="false" aria-controls="headline">
-            <span class="cap" aria-hidden="true"><img src="assets/carousel/key-gold.png" alt="" width="151" height="158" decoding="async"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3.5 20h17"/></svg></span>
-            <span class="key-label">Bank</span>
-          </button>
-          <button class="key key-ink" type="button" data-key="2" aria-pressed="false" aria-controls="headline">
-            <span class="cap" aria-hidden="true"><img src="assets/carousel/key-ink.png" alt="" width="151" height="158" decoding="async"><svg viewBox="0 0 24 24"><path d="M4.5 16a7.5 7.5 0 1 1 15 0"/><path d="m12 16 4-4.5"/><circle cx="12" cy="16" r="1.3"/></svg></span>
-            <span class="key-label">Credit</span>
-          </button>
-        </div>
 
         <p class="sub" data-slot="sub">Your buyer verifies ID, income and credit on their own phone, right at your desk. You send the lender one decision-ready file before they leave the lot.</p>
 
@@ -63,20 +48,57 @@
           <blockquote><p data-slot="quote">“We weren’t losing those deals on price. We were losing them to paperwork.”</p></blockquote>
           <figcaption data-slot="quote-who">F&amp;I, Holand Leasing</figcaption>
         </figure>
-
-        <div class="laurel" aria-label="11 minute median to a decision-ready file, as published on oncarousel.com">
-          <svg class="branch" viewBox="0 0 24 64" aria-hidden="true"><use href="#leaf-branch"/></svg>
-          <p><small>Median time to a</small><b>11 MIN</b><small>decision-ready file</small></p>
-          <svg class="branch flip" viewBox="0 0 24 64" aria-hidden="true"><use href="#leaf-branch"/></svg>
-        </div>
         </div>
       </div>
 
-      <div class="props" aria-hidden="true" data-slot="props">
-        <span class="prop prop-key"   data-depth="1.4"><img src="assets/props/key.webp" alt="" width="360" height="413" loading="lazy" decoding="async"></span>
-        <span class="prop prop-car"   data-depth="0.7"><img src="assets/props/car.webp" alt="" width="360" height="207" loading="lazy" decoding="async"></span>
-        <span class="prop prop-stamp" data-depth="1.1"><img src="assets/props/stamp.webp" alt="" width="360" height="412" loading="lazy" decoding="async"></span>
-      </div>
+      <aside class="deal" aria-label="Example deal file building as the buyer verifies (fictional)">
+        <header class="deal-head">
+          <span class="deal-avatar" aria-hidden="true">MR</span>
+          <div class="deal-who"><strong>Marc-André Roy</strong><small>Deal 4812 · 2023 RAV4 XLE</small></div>
+          <span class="deal-status" data-slot="status"><i aria-hidden="true"></i><span>In progress</span></span>
+        </header>
+        <div class="tray" role="group" aria-label="Checks the buyer completes">
+            <button class="key key-cream" type="button" data-key="0" aria-pressed="true" aria-controls="headline deal-receipt">
+              <span class="cap" aria-hidden="true"><img src="assets/carousel/key-cream.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-1.4 1.7-2 3-2s2.4.6 3 2M14 10h4M14 13h3"/></svg></span>
+              <span class="led" aria-hidden="true"></span>
+              <span class="key-label">ID</span>
+            </button>
+            <button class="key key-gold" type="button" data-key="1" aria-pressed="false" aria-controls="headline deal-receipt">
+              <span class="cap" aria-hidden="true"><img src="assets/carousel/key-gold.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3.5 20h17"/></svg></span>
+              <span class="led" aria-hidden="true"></span>
+              <span class="key-label">Bank</span>
+            </button>
+            <button class="key key-orange" type="button" data-key="2" aria-pressed="false" aria-controls="headline deal-receipt">
+              <span class="cap" aria-hidden="true"><img src="assets/carousel/key-orange.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
+              <span class="led" aria-hidden="true"></span>
+              <span class="key-label">Address</span>
+            </button>
+            <button class="key key-cream" type="button" data-key="3" aria-pressed="false" aria-controls="headline deal-receipt">
+              <span class="cap" aria-hidden="true"><img src="assets/carousel/key-cream.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M9 7.5V5.6c0-.9.7-1.6 1.6-1.6h2.8c.9 0 1.6.7 1.6 1.6v1.9M3 12.5h18"/></svg></span>
+              <span class="led" aria-hidden="true"></span>
+              <span class="key-label">Job</span>
+            </button>
+            <button class="key key-ink" type="button" data-key="4" aria-pressed="false" aria-controls="headline deal-receipt">
+              <span class="cap" aria-hidden="true"><img src="assets/carousel/key-ink.png" alt="" decoding="async"><svg viewBox="0 0 24 24"><path d="M4.5 16a7.5 7.5 0 1 1 15 0"/><path d="m12 16 4-4.5"/><circle cx="12" cy="16" r="1.3"/></svg></span>
+              <span class="led" aria-hidden="true"></span>
+              <span class="key-label">Credit</span>
+            </button>
+          <span class="tray-bar" aria-hidden="true"><span data-slot="progress"></span></span>
+        </div>
+        <div class="receipt" id="deal-receipt">
+          <p class="rc-top"><span>Carousel</span><span>Deal 4812 · M. Roy</span></p>
+          <ul class="rc-rows">
+            <li data-row="0"><span class="r-name">Identity</span><span class="r-dots"></span><span class="r-val" data-pending="Licence + selfie">Waiting</span></li>
+            <li data-row="1"><span class="r-name">Bank income</span><span class="r-dots"></span><span class="r-val" data-pending="12 months">Waiting</span></li>
+            <li data-row="2"><span class="r-name">Address</span><span class="r-dots"></span><span class="r-val" data-pending="Confirmed">Waiting</span></li>
+            <li data-row="3"><span class="r-name">Employment</span><span class="r-dots"></span><span class="r-val" data-pending="Employer confirmed">Waiting</span></li>
+            <li data-row="4"><span class="r-name">Credit</span><span class="r-dots"></span><span class="r-val" data-pending="Bureau file">Waiting</span></li>
+          </ul>
+          <p class="rc-total"><span>File status</span><span data-slot="file-status">Building</span></p>
+          <span class="rc-check" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20"/><path d="m15 24.5 6 6 12-13"/></svg></span>
+        </div>
+        <img class="deal-stamp" src="assets/props/stamp.webp" alt="" aria-hidden="true" width="360" height="412" decoding="async">
+      </aside>
 
       <div class="visual" data-slot="visual">
         <div class="lady" data-slot="lady">

@@ -8,8 +8,8 @@ export const VERTICALS = {
     label: "Auto finance",
     tag: "For dealer F&I",
     lead: "Clear the stips",
-    rotate: ["scan their ID", "connect their bank", "sign the consent"],
-    keys: ["ID", "Bank", "Credit"], // one keycap per phrase, same order
+    rotate: ["scan their ID", "connect their bank", "prove their address", "confirm their job", "sign the consent"],
+    keys: ["ID", "Bank", "Address", "Job", "Credit"], // one keycap per phrase, same order
     sub: "Your buyer verifies ID, income and credit on their own phone, right at your desk. You send the lender one decision-ready file before they leave the lot.",
     cta: { label: "Book a demo", href: "https://oncarousel.com/book-a-demo/" },
     secondary: { label: "See a sample report", href: "https://oncarousel.com/assets/sample/screening-report-example.pdf" },
@@ -18,14 +18,15 @@ export const VERTICALS = {
       who: "F&I, Holand Leasing",
     },
     character: true, // layered figure in assets/lady/ (body + gaze heads)
+    deal: true,      // the deal-file card is written for the dealer; other verticals hide it until they get their own
   },
 
   "commercial-screening": {
     label: "Commercial leasing",
     tag: "For credit desks",
     lead: "Approve the tenant",
-    rotate: ["scan their ID", "connect the business bank", "consent to credit"],
-    keys: ["ID", "Bank", "Credit"],
+    rotate: ["scan their ID", "connect the business bank", "prove the address", "confirm the business", "consent to credit"],
+    keys: ["ID", "Bank", "Address", "Business", "Credit"],
     sub: "The applicant proves who they are and what the business earns from their phone, in one sitting. Your credit desk reads one report instead of chasing statements.",
     cta: { label: "Book a demo", href: "https://oncarousel.com/book-a-demo/" },
     secondary: { label: "See a sample report", href: "https://oncarousel.com/assets/sample/screening-report-example.pdf" },
@@ -33,6 +34,7 @@ export const VERTICALS = {
       text: "Screening was the one thing that never lived where we actually work.",
       who: "Operations, Unity Leases",
     },
+    deal: false,
     character: false, // no character generated for this vertical yet; the layout hides the column
   },
 };
