@@ -51,7 +51,8 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gut);
   height: var(--nav-h); /* fixed, so the hero's "one screen minus nav and ticker" maths is exact */
 }
-.wordmark { font-family: var(--serif); font-size: 28px; line-height: 1; letter-spacing: -0.02em; text-decoration: none; }
+.wordmark { display: block; line-height: 0; }
+.wordmark img { height: 24px; width: auto; }
 .nav-links { display: flex; align-items: center; gap: 22px; }
 .nav-link { font-size: 15px; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
 @media (max-width: 480px) { .nav-link { display: none; } }
@@ -74,6 +75,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 @media (min-width: 860px) {
   .hero {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-rows: minmax(0, 1fr); /* the row is the hero, never taller: tall copy must not push her down */
     height: clamp(420px, calc(100svh - var(--nav-h) - var(--tick-h)), 860px);
     padding-top: clamp(8px, 2.5vh, 40px);
     padding-left: max(var(--gut), calc((100vw - var(--wrap)) / 2 + var(--gut)));
@@ -148,12 +150,12 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 .text-link:hover { text-decoration-color: var(--ink); }
 
-.proof { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin-top: clamp(16px, 3.4vh, 30px); }
+.proof { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(12px, 2.2vh, 20px); margin-top: clamp(16px, 3.4vh, 30px); } /* laurel always under the quote */
 .quote { margin: 0; max-width: 26rem; flex: 1 1 18rem; }
 .quote blockquote { margin: 0; }
 .quote p {
   margin: 0; font-family: var(--serif); font-style: italic;
-  font-size: clamp(19px, 1.5vw, 22px); line-height: 1.3;
+  font-size: clamp(16px, min(1.5vw, 2.4vh), 22px); line-height: 1.3;
 }
 .quote figcaption {
   margin-top: 8px; font-family: var(--mono); font-size: 11.5px;
@@ -163,7 +165,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 /* Gold laurel award, after Carousel's "$400M" badge (we use a figure they publish
    consistently; their $400M and LinkedIn's $175M disagree, so we don't quote it) */
 .laurel { display: inline-flex; align-items: center; gap: 10px; flex: none; }
-.laurel .branch { width: 18px; height: 50px; }
+.laurel .branch { width: 18px; height: clamp(38px, 5.5vh, 50px); }
 .laurel .flip { transform: scaleX(-1); }
 .laurel p { margin: 0; text-align: center; line-height: 1; }
 .laurel small {
@@ -172,7 +174,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 .laurel b {
   display: block; margin: 4px 0;
-  font-weight: 900; font-size: 30px; letter-spacing: -0.02em;
+  font-weight: 900; font-size: clamp(22px, 3.3vh, 30px); letter-spacing: -0.02em;
   background: linear-gradient(100deg, #8a6b24 0%, #c9a65a 30%, #fff1c2 46%, #c9a65a 60%, #8a6b24 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
@@ -188,7 +190,6 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .lady {
   position: absolute; bottom: 0; left: 50%; height: 100%;
   aspect-ratio: 2352 / 1776; transform: translateX(-50%); /* phone: zoomed ~1.3x, mound trimmed at the sides */
-  perspective: 1400px;
 }
 @media (min-width: 860px) {
   .visual { container-type: size; aspect-ratio: auto; height: 100%; margin-top: 0; }
@@ -197,8 +198,6 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 .lady-tilt {
   position: absolute; inset: 0;
   transform-origin: 62% 30%;
-  transform: rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg));
-  will-change: transform;
 }
 .lady-body { position: absolute; inset: 0; width: 100%; height: 100%; }
 .lady-head { position: absolute; left: 28.571%; top: 6.194%; width: 34.014%; height: 59.122%; } /* from assets/lady/states.json */
@@ -384,10 +383,17 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 
 /* Short desktop windows: the quote + laurel is the first thing to go, never the CTA.
    (Kept at the end of the file: an earlier copy was silently overridden by .proof's own rule.) */
-@media (min-width: 860px) and (max-height: 740px) { .proof { display: none; } }
+@media (min-width: 860px) and (max-height: 740px) { .quote { display: none; } } /* short windows: drop the quote, keep the laurel */
 
 
 /* The mound reaches about 20% up the figure under the copy column: keep the text above it. */
 @media (min-width: 860px) {
-  .copy { padding-bottom: clamp(56px, calc((100svh - var(--nav-h) - var(--tick-h)) * 0.19), 160px); }
+  .copy { padding-bottom: clamp(10px, 2vh, 40px); }
 }
+
+/* Customer names and logos in the ticker, as on Carousel's vertical pages (their .ym-lg-co: Hanken 600,
+   sentence case, ink). Logo files are Carousel's own (assets/carousel/). */
+.ticker-track li.t-co { display: inline-flex; align-items: center; gap: 7px; font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+  letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
+.ticker-track li.t-co img { height: 16px; width: auto; display: block; }
+.ticker-track li.t-co img[alt="Canacap"] { height: 13px; }

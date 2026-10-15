@@ -4,7 +4,7 @@ import { VERTICALS, DEFAULT_VERTICAL } from "./verticals.js";
    correctly with no JS. This script:
      1. re-renders when ?v=<slug> asks for another vertical
      2. cycles the italic phrase, and lets the keycaps drive it
-     3. makes the character follow the cursor (gaze frames + 3D tilt) and wink on click
+     3. makes the character follow the cursor (gaze frames, no tilt: she stays static) and wink on any press
      4. loops the ticker
      5. pushes the CTA click to dataLayer */
 
@@ -140,9 +140,8 @@ if (deal && !reduceMotion && "IntersectionObserver" in window) {
   }, { threshold: 0.5 }).observe(deal);
 }
 
-/* ---------- 3. character: gaze + tilt + wink ---------- */
+/* ---------- 3. character: gaze + wink ---------- */
 const lady = $("[data-slot=lady]");
-const tilt = lady?.querySelector(".lady-tilt");
 const heads = Object.fromEntries($$(".lady-head img").map(img => [img.dataset.gaze, img]));
 let gaze = "centre", winking = false;
 
@@ -168,19 +167,10 @@ if (canTrack) {
   addEventListener("load", () => ("requestIdleCallback" in window ? requestIdleCallback(loadHeads) : setTimeout(loadHeads, 300)));
 
   let inView = true;
-  new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (!inView) { look("centre"); aim(0, 0); } }, { threshold: 0.15 })
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; if (!inView) look("centre"); }, { threshold: 0.15 })
     .observe(lady);
 
-  // Continuous tilt, eased every frame toward a target, so the hard head swaps read as one motion.
-  let rx = 0, ry = 0, trx = 0, try_ = 0, raf = 0;
-  function aim(x, y) { trx = x; try_ = y; if (!raf) raf = requestAnimationFrame(step); }
-  function step() {
-    rx += (trx - rx) * 0.09;
-    ry += (try_ - ry) * 0.09;
-    tilt.style.setProperty("--rx", rx.toFixed(2) + "deg");
-    tilt.style.setProperty("--ry", ry.toFixed(2) + "deg");
-    raf = Math.abs(trx - rx) + Math.abs(try_ - ry) > 0.02 ? requestAnimationFrame(step) : 0;
-  }
+  // No tilt: Ryan wanted her (and the pile, which is the same photo) static. Only the head frame changes.
 
   // Eight directions, by the angle from her face to the cursor. Frames G1/G2/G4 were named in
   // the GENERATED image's terms and the page mirrors her, so on screen: G2 = left, G1 = right,
@@ -197,13 +187,11 @@ if (canTrack) {
     const r = lady.querySelector(".lady-head").getBoundingClientRect();
     const fx = r.left + r.width * 0.506, fy = r.top + r.height * 0.267; // her face within the taller head box
     const px = e.clientX - fx, py = e.clientY - fy;
-    const dx = px / innerWidth, dy = py / innerHeight;
     look(zone(px, py));
-    aim(Math.max(-4, Math.min(4, -dy * 10)), Math.max(-7, Math.min(7, dx * 16)));
   }, { passive: true });
 
   document.documentElement.addEventListener("mouseleave", () => {
-    look("centre"); aim(0, 0);
+    look("centre");
   });
 
 }
