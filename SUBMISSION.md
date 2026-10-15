@@ -14,7 +14,7 @@ It's built to sit on oncarousel.com: your type, colours, keycaps and LIVE ticker
 
 ## AI log
 
-**Tools:** Claude Code for the build, the brand study and every check, driving a headless Chrome to read your live site; Seedream 5.0 Pro (via kie.ai) for the character and her gaze frames; GPT Image 2.5 for the approval stamp; Apple's on-device Vision model for cut-outs. Image spend was $3.43, logged per call against a $5 cap I set before starting.
+**Tools:** Claude Code for the build, the brand study and every check, driving a headless Chrome to read your live site; Seedream 5.0 Pro (via kie.ai) for the character and her gaze frames; GPT Image 2.5 for the approval stamp; Apple's on-device Vision model for cut-outs. Image generation cost $3.43 in total, logged per call.
 
 - **Brand study before building.** Claude Code rendered your site at desktop size, read the CSS behind each signature effect (the extruded headline shadows, the gold foil, the keycap press) and read your shipped JavaScript to see how your hero follows the cursor. The page uses your values, not guesses.
 - **Where the AI was wrong (1): it called the first version on-brand because it used your colour palette.** Every automated check passed. Side by side with your site, it was a generic hero in your colours. Comparing the two is how I caught it, and the study above was the fix. The lesson: fit is a separate test from quality.
