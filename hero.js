@@ -131,6 +131,15 @@ if (reduceMotion) complete(); // no motion: show the finished file, which says t
 else paintCard(0, false);
 start();
 
+// The card lives below the fold: when it scrolls into view, start the file over from step 1
+// so the visitor always watches the whole thing build.
+if (deal && !reduceMotion && "IntersectionObserver" in window) {
+  new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting || held) return;
+    stop(); deal.classList.remove("is-stamping"); show(0); paintCard(0, false); start();
+  }, { threshold: 0.5 }).observe(deal);
+}
+
 /* ---------- 3. character: gaze + tilt + wink ---------- */
 const lady = $("[data-slot=lady]");
 const tilt = lady?.querySelector(".lady-tilt");

@@ -17,8 +17,12 @@
   --sans: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --h1: clamp(40px, 4.4vw, 64px);
-  --lede: clamp(18px, 1.5vw, 21px);
+  /* Type scales with BOTH width and height, so a short window shrinks the copy instead of
+     pushing the ticker off the fold. */
+  --h1: clamp(34px, min(4.4vw, 7.2vh), 64px);
+  --lede: clamp(16px, min(1.5vw, 2.5vh), 21px);
+  --nav-h: 70px;
+  --tick-h: 46px;
   --gut: clamp(16px, 4vw, 48px);
   --wrap: 1240px;
 }
@@ -44,9 +48,10 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 /* Nav */
 .nav {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  max-width: var(--wrap); margin: 0 auto; padding: 16px var(--gut);
+  max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gut);
+  height: var(--nav-h); /* fixed, so the hero's "one screen minus nav and ticker" maths is exact */
 }
-.wordmark { font-family: var(--serif); font-size: 28px; letter-spacing: -0.02em; text-decoration: none; }
+.wordmark { font-family: var(--serif); font-size: 28px; line-height: 1; letter-spacing: -0.02em; text-decoration: none; }
 .nav-links { display: flex; align-items: center; gap: 22px; }
 .nav-link { font-size: 15px; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
 @media (max-width: 480px) { .nav-link { display: none; } }
@@ -64,18 +69,22 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   gap: 8px;
   padding: clamp(16px, 3vw, 40px) var(--gut) 0;
 }
+/* Desktop and laptop: the hero is exactly one screen minus nav and ticker (capped on huge
+   screens), so the LIVE ticker always lands on the fold line, whatever the window size. */
 @media (min-width: 860px) {
   .hero {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    min-height: min(760px, calc(100svh - 70px - 46px));
+    height: clamp(420px, calc(100svh - var(--nav-h) - var(--tick-h)), 860px);
+    padding-top: clamp(8px, 2.5vh, 40px);
     padding-left: max(var(--gut), calc((100vw - var(--wrap)) / 2 + var(--gut)));
     padding-right: 0;
   }
 }
-.copy { position: relative; z-index: 2; padding-bottom: clamp(28px, 4vw, 56px); align-self: center; }
+.copy { position: relative; z-index: 2; padding-bottom: clamp(16px, 3.5vh, 56px); align-self: center; }
+
 
 /* Skewed promo-style tag, after Carousel's "FIRST PURCHASE ONLY" pill */
-.tag { margin: 0 0 18px; }
+.tag { margin: 0 0 clamp(10px, 2vh, 18px); }
 .tag span {
   display: inline-block; padding: 3px 10px; border-radius: 5px;
   background: var(--acc); color: #fff;
@@ -120,7 +129,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   font-size: var(--lede); line-height: 1.45; color: var(--ink-soft); text-wrap: pretty;
 }
 
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 32px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: clamp(18px, 3.6vh, 32px); }
 
 /* Chunky keyboard-key button, Carousel's closing-CTA treatment */
 .btn-key {
@@ -139,7 +148,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 .text-link:hover { text-decoration-color: var(--ink); }
 
-.proof { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin-top: 30px; }
+.proof { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin-top: clamp(16px, 3.4vh, 30px); }
 .quote { margin: 0; max-width: 26rem; flex: 1 1 18rem; }
 .quote blockquote { margin: 0; }
 .quote p {
@@ -171,16 +180,19 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 /* The character. Body layer with a hole where the head goes + one head crop per gaze,
    after Carousel's Pile Lady (see brand-study/BRAND-STUDY.md, Interaction layer). The head
    box is in % of the figure, read from assets/lady/states.json, so it tracks any size. */
-.visual { position: relative; min-height: 460px; }
+/* .visual is a size container: she is sized from BOTH its height and width (min(100cqh, 130cqw);
+   her aspect is 0.75), so she shrinks smoothly as the window narrows instead of jumping, and is
+   never wider than her column. Phones: a capped band under the copy, centred. */
+.visual { position: relative; container-type: size; height: min(52svh, 460px); margin-top: -28px; } /* phone: tucked up under the copy (her frame has backdrop above the hair) */
 .lady {
   position: absolute; bottom: 0; left: 50%;
-  height: 100%; aspect-ratio: 1728 / 2304;
+  height: min(100cqh, 130cqw); aspect-ratio: 1728 / 2304;
   transform: translateX(-56%);
   perspective: 1400px;
 }
 @media (min-width: 860px) {
-  .visual { min-height: 0; }
-  .lady { height: 104%; left: auto; right: 2%; transform: none; }
+  .visual { height: 100%; margin-top: 0; }
+  .lady { left: auto; right: 2%; transform: none; }
 }
 .lady-tilt {
   position: absolute; inset: 0;
@@ -207,22 +219,36 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
    gap between the copy and the character, overlapping her folder stack: the pile becomes one file. */
 .deal {
   position: relative; z-index: 3;
-  margin: 28px 0 8px; max-width: 400px;
   background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 14px;
   box-shadow: 0 30px 50px -28px rgba(26,23,20,.45), 0 2px 0 rgba(26,23,20,.03);
 }
-/* 860-1199px: no room in the gap, so the card sits in the text column under the quote.
-   1200px+: it floats in the gap, starting just past the subhead's measure (32rem) and overlapping
-   the folder stack. Laurel badge removed: the card carries the proof and the ticker has the 11 min. */
-@media (min-width: 860px) {
-  .copy { grid-column: 1; grid-row: 1; }
-  .deal { grid-column: 1; grid-row: 2; margin: 4px 0 28px; }
-  .visual { grid-column: 2; grid-row: 1; }
+/* The how-it-works band, right under the ticker. Two columns on desktop, stacked on phones. */
+.how {
+  max-width: var(--wrap); margin: 0 auto; padding: clamp(48px, 7vw, 96px) var(--gut);
+  display: grid; gap: clamp(28px, 4vw, 64px); align-items: center;
 }
-@media (min-width: 1200px) {
-  .deal { position: absolute; grid-area: auto; margin: 0; width: clamp(340px, 27vw, 390px); /* grid-area auto: an absolute grid item would otherwise measure from its cell */
-          left: calc(max(var(--gut), (100vw - var(--wrap)) / 2 + var(--gut)) + 34rem + 3vw); bottom: 22px; }
+@media (min-width: 860px) { .how { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.eyebrow {
+  margin: 0 0 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--muted);
 }
+.how-title {
+  margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 3.4vw, 48px);
+  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+}
+.how-title em { font-style: italic; color: var(--acc); }
+.how-steps { list-style: none; counter-reset: s; margin: 26px 0 0; padding: 0; display: grid; gap: 16px; max-width: 30rem; }
+.how-steps li { counter-increment: s; position: relative; padding-left: 48px; font-size: 17px; line-height: 1.45; color: var(--ink-soft); }
+/* block + absolute number: a 2-column grid here put the bare text node into the 34px number column */
+.how-steps li::before {
+  content: "0" counter(s); position: absolute; left: 0; top: 2px; width: 32px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--muted);
+  padding-top: 4px; border-top: 1px solid var(--line-2);
+}
+.how-steps b { color: var(--ink); font-weight: 600; }
+.how-link { display: inline-block; margin-top: 26px; }
+.how-card { display: grid; justify-items: center; }
+.deal { width: 100%; max-width: 440px; margin: 0; }
 .deal-head { display: flex; align-items: center; gap: 11px; padding: 2px 2px 12px; }
 .deal-avatar {
   display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; flex: none;
@@ -351,3 +377,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   max-width: var(--wrap); margin: 0 auto; padding: 18px var(--gut) 28px;
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted);
 }
+
+/* Short desktop windows: the quote + laurel is the first thing to go, never the CTA.
+   (Kept at the end of the file: an earlier copy was silently overridden by .proof's own rule.) */
+@media (min-width: 860px) and (max-height: 680px) { .proof { display: none; } }
