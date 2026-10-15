@@ -117,33 +117,50 @@ if (canTrack) {
     raf = Math.abs(trx - rx) + Math.abs(try_ - ry) > 0.02 ? requestAnimationFrame(step) : 0;
   }
 
-  // The page shows her mirrored, so frames are named in the GENERATED image's terms:
-  // G1 = image-left = screen RIGHT, G2 = image-right = screen LEFT, G4 = up + screen left.
-  function zone(dx, dy) {
-    if (Math.abs(dx) < 0.05 && Math.abs(dy) < 0.08) return "centre"; // cursor on her: she looks at you
-    if (dx > 0.04) return "G1";
-    if (dy < -0.12) return "G4";
-    if (dx < -0.04) return "G2";
-    return "centre";
+  // Eight directions, by the angle from her face to the cursor. Frames G1/G2/G4 were named in
+  // the GENERATED image's terms and the page mirrors her, so on screen: G2 = left, G1 = right,
+  // G4 = up-left. UR / D / DL / DR were named in screen terms when they were prompted.
+  const SECTORS = ["G1", "DR", "D", "DL", "G2", "G4", "G4", "UR"]; // 0deg = right, clockwise (screen y grows down)
+  function zone(px, py) {
+    if (Math.hypot(px, py) < 70) return "centre"; // cursor on her face: she looks at you
+    const a = (Math.atan2(py, px) * 180 / Math.PI + 360 + 22.5) % 360;
+    return SECTORS[Math.floor(a / 45)];
   }
 
   addEventListener("pointermove", e => {
     if (!inView || e.pointerType !== "mouse") return;
     const r = lady.querySelector(".lady-head").getBoundingClientRect();
-    const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth;
-    const dy = (e.clientY - (r.top + r.height * 0.45)) / innerHeight;
-    look(zone(dx, dy));
+    const fx = r.left + r.width * 0.64, fy = r.top + r.height * 0.28; // her face within the taller head box
+    const px = e.clientX - fx, py = e.clientY - fy;
+    const dx = px / innerWidth, dy = py / innerHeight;
+    look(zone(px, py));
     aim(Math.max(-4, Math.min(4, -dy * 10)), Math.max(-7, Math.min(7, dx * 16)));
   }, { passive: true });
 
-  document.documentElement.addEventListener("mouseleave", () => { look("centre"); aim(0, 0); });
+  // Floating props: depth parallax, after Carousel's .fz-float (offset up to 30px x / 24px y, x depth).
+  const props = $$(".prop");
+  addEventListener("pointermove", e => {
+    if (!inView || e.pointerType !== "mouse") return;
+    const nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
+    props.forEach(p => {
+      const d = +p.dataset.depth || 1;
+      p.style.setProperty("--mx", (-nx * 30 * d).toFixed(1) + "px");
+      p.style.setProperty("--my", (-ny * 24 * d).toFixed(1) + "px");
+    });
+  }, { passive: true });
+
+  document.documentElement.addEventListener("mouseleave", () => {
+    look("centre"); aim(0, 0);
+    props.forEach(p => { p.style.removeProperty("--mx"); p.style.removeProperty("--my"); });
+  });
 
   // Click on the hero (not on a link or button) and she winks.
   $(".hero").addEventListener("click", e => {
     if (e.target.closest("a, button") || !heads.WINK.naturalWidth) return;
     look("WINK");
     winking = true;
-    setTimeout(() => { winking = false; look("centre"); }, 800);
+    poke(); // the bounce makes the click read even when her face is small on screen
+    setTimeout(() => { winking = false; look("centre"); }, 1300);
   });
 }
 

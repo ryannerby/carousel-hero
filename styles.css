@@ -16,7 +16,7 @@
   --sans: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --h1: clamp(42px, 4.8vw, 70px);
+  --h1: clamp(40px, 4.4vw, 64px);
   --lede: clamp(18px, 1.5vw, 21px);
   --gut: clamp(16px, 4vw, 48px);
   --wrap: 1240px;
@@ -61,7 +61,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   overflow-x: clip; /* the character bleeds off the right edge; never widen the page */
   display: grid;
   gap: 8px;
-  padding: clamp(20px, 4vw, 56px) var(--gut) 0;
+  padding: clamp(16px, 3vw, 40px) var(--gut) 0;
 }
 @media (min-width: 860px) {
   .hero {
@@ -71,7 +71,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
     padding-right: 0;
   }
 }
-.copy { position: relative; z-index: 1; padding-bottom: clamp(28px, 4vw, 56px); align-self: center; }
+.copy { position: relative; z-index: 2; padding-bottom: clamp(28px, 4vw, 56px); align-self: center; }
 
 /* Skewed promo-style tag, after Carousel's "FIRST PURCHASE ONLY" pill */
 .tag { margin: 0 0 18px; }
@@ -179,7 +179,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   will-change: transform;
 }
 .lady-body { position: absolute; inset: 0; width: 100%; height: 100%; }
-.lady-head { position: absolute; left: 17.824%; top: 4.774%; width: 41.667%; height: 30.816%; } /* from assets/lady/states.json */
+.lady-head { position: absolute; left: 17.824%; top: 4.774%; width: 41.667%; height: 49.479%; } /* from assets/lady/states.json */
 .lady-head img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 .lady-head img.is-on { opacity: 1; } /* hard cut, as Carousel's: the tilt carries the motion */
 .lady img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
@@ -191,45 +191,74 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 .no-image .visual { display: none; }
 
-/* Keycaps: press one to show that step in the headline; hover hops, like Carousel's keys */
-.keys { display: flex; gap: 16px; margin-top: 24px; }
+/* Floating props (generated, GPT Image 2.5 transparent; stamp cut out with Apple Vision).
+   After Carousel's .fz-float: each has a depth, the cursor offsets it by up to 30px x depth
+   (via --mx/--my set in hero.js), and it bobs slowly on its own. Desktop only. */
+.props { display: none; }
+@media (min-width: 860px) {
+  .props { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .prop {
+    position: absolute; display: block;
+    transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) rotate(var(--rot, 0deg));
+    transition: transform 600ms cubic-bezier(.2,.7,.2,1);
+    filter: drop-shadow(0 18px 18px rgba(26,23,20,.16));
+  }
+  .prop img { display: block; width: 100%; height: auto; }
+  .prop-key   { left: 50%; top: 9%;  width: clamp(64px, 6vw, 92px);  --rot: -14deg; }
+  .prop-car   { left: 49%; top: 40%; width: clamp(110px, 10vw, 150px); --rot: 6deg; }
+  .prop-stamp { left: 55%; top: 63%; width: clamp(60px, 5.4vw, 82px);  --rot: 12deg; }
+}
+@media (min-width: 860px) and (prefers-reduced-motion: no-preference) {
+  .prop img { animation: bob 6s ease-in-out infinite; }
+  .prop-car img { animation-duration: 7.5s; animation-delay: -2s; }
+  .prop-stamp img { animation-duration: 5.2s; animation-delay: -1s; }
+  @keyframes bob { 50% { transform: translateY(-9px) rotate(-2deg); } }
+}
+
+/* Keycaps. Key art is Carousel's own (assets/carousel/key-*.png, reused from oncarousel.com so the
+   component matches their design system; credited in README). Behaviour and values copied from their
+   live #checks-keys: navy drop shadow on the cap, press = squash 2.5% + drop, icon glows blue when active,
+   pressed label turns navy. */
+.keys { display: flex; gap: 12px; margin-top: 18px; }
 .key {
-  display: grid; justify-items: center; gap: 9px;
+  display: grid; justify-items: center; gap: 6px;
   padding: 0; border: 0; background: none; cursor: pointer; color: inherit;
   font: inherit; -webkit-tap-highlight-color: transparent;
 }
 .key:focus-visible { outline: none; }
-.key:focus-visible .cap { outline: 2px solid var(--acc); outline-offset: 4px; }
+.key:focus-visible .key-label { outline: 2px solid var(--acc); outline-offset: 2px; }
 .cap {
-  --face1: #fdf9ef; --face2: #e6ddc8; --edge: #cbbfa4; --ink-icon: #4a4237;
-  display: grid; place-items: center; width: 60px; height: 54px; border-radius: 13px;
-  background: linear-gradient(180deg, var(--face1), var(--face2));
-  box-shadow: inset 0 2px 0 rgba(255,255,255,.75), inset 0 -3px 0 rgba(0,0,0,.07),
-              0 6px 0 var(--edge), 0 14px 18px -8px rgba(26,23,20,.38);
-  color: var(--ink-icon);
-  transition: transform 220ms cubic-bezier(.3,1.6,.5,1), box-shadow 160ms ease;
+  position: relative; display: block; width: 64px;
+  transition: transform .16s cubic-bezier(.3,1.5,.5,1), filter .16s;
+  transform-origin: 50% 100%;
 }
-.key-cream .cap { --edge: #c9bd9f; }
-.key-gold .cap  { --face1: #f6dc94; --face2: #b9903c; --edge: #87661f; --ink-icon: #4f3a10; }
-.key-ink .cap   { --face1: #45403a; --face2: #16130f; --edge: #000; --ink-icon: #faf9f5; }
-.cap svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.cap img {
+  display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 1px 0 rgba(14,26,92,.5)) drop-shadow(0 3px 4px rgba(14,26,92,.35));
+}
+.cap svg {
+  position: absolute; left: 50%; top: 37%; width: 21px; height: 21px; transform: translate(-50%, -50%);
+  fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
+  transition: color .16s, filter .16s;
+}
+.key-cream .cap svg { color: #6b6357; }
+.key-gold .cap svg  { color: #4f3a10; }
+.key-ink .cap svg   { color: #e9e4da; }
 .key-label {
-  padding: 3px 9px; border-radius: 5px; border: 1px solid var(--line-2);
-  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--ink-soft); background: #fff;
-  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  padding: 4px 9px 3px; border-radius: 6px; border: 1px solid rgba(14,26,92,.12);
+  box-shadow: 0 1px 0 rgba(14,26,92,.25);
+  background: #f4f5fa; color: #0e1a5c;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  transition: background .15s, color .15s;
 }
-.key[aria-pressed="true"] .key-label { background: #0e1a5c; border-color: #0e1a5c; color: #fff; }
-.key[aria-pressed="true"] .cap {
-  transform: translateY(4px);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -2px 0 rgba(0,0,0,.08),
-              0 2px 0 var(--edge), 0 6px 10px -6px rgba(26,23,20,.4);
-}
+.key[aria-pressed="true"] .cap { transform: translateY(5px) scaleY(.975); filter: brightness(.93) saturate(1.05); }
+.key[aria-pressed="true"] .cap svg { color: var(--acc); filter: drop-shadow(0 0 5px rgba(125,210,255,.9)); }
+.key-ink[aria-pressed="true"] .cap svg { color: #8fb2ff; }
+.key[aria-pressed="true"] .key-label { background: #0e1a5c; color: #fff; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .key:hover .cap { transform: translateY(-6px); }
-  .key[aria-pressed="true"]:hover .cap { transform: translateY(2px); }
+  .key:not([aria-pressed="true"]):hover .cap { transform: translateY(-6px); }
 }
-.key:active .cap { transform: translateY(5px); box-shadow: inset 0 2px 0 rgba(255,255,255,.5), 0 1px 0 var(--edge), 0 4px 8px -6px rgba(26,23,20,.4); }
+.key:active .cap { transform: translateY(7px) scaleY(.96); }
 
 /* Mono ticker, after Carousel's "LIVE" strip */
 .ticker {
