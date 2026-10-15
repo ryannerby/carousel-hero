@@ -124,7 +124,7 @@ keys.forEach((k, i) => {
   k.addEventListener("focus", hold);
   k.addEventListener("mouseleave", release);
   k.addEventListener("blur", release);
-  k.addEventListener("click", () => { show(i); paintCard(i, false); poke(); });
+  k.addEventListener("click", () => { show(i); paintCard(i, false); });
 });
 
 if (reduceMotion) complete(); // no motion: show the finished file, which says the most at a glance
@@ -155,12 +155,6 @@ function look(name) {
   gaze = name;
 }
 
-function poke() {
-  if (!lady || reduceMotion) return;
-  lady.classList.remove("is-poke");
-  void lady.offsetWidth; // restart the animation
-  lady.classList.add("is-poke");
-}
 
 // Tracking only where it makes sense: a real mouse, room for the figure, motion allowed.
 // Phones keep the resting frame and never download the extra heads (as Carousel's does).
@@ -212,14 +206,22 @@ if (canTrack) {
     look("centre"); aim(0, 0);
   });
 
-  // Click on the hero (not on a link or button) and she winks.
-  $(".hero").addEventListener("click", e => {
-    if (e.target.closest("a, button") || !heads.WINK.naturalWidth) return;
-    look("WINK");
-    winking = true;
-    poke(); // the bounce makes the click read even when her face is small on screen
-    setTimeout(() => { winking = false; look("centre"); }, 1300);
-  });
+}
+
+/* Wink on ANY press: a click anywhere, Book a demo, a key. pointerdown fires before a link
+   navigates, so she winks as you hit the CTA. Works on phones too: the wink head is fetched
+   on every device (one ~25 KB file), only the gaze heads are desktop-only. No bounce. */
+if (lady && !reduceMotion) {
+  const wink = heads.WINK;
+  const fetchWink = () => { if (!wink.src) wink.src = "assets/lady/head-WINK.webp"; };
+  addEventListener("load", () => setTimeout(fetchWink, 200));
+  let winkT = 0;
+  addEventListener("pointerdown", () => {
+    if (!wink.naturalWidth) return;
+    winking = false; look("WINK"); winking = true;
+    clearTimeout(winkT);
+    winkT = setTimeout(() => { winking = false; look("centre"); }, 1100);
+  }, { passive: true });
 }
 
 /* ---------- 4. ticker ---------- */
