@@ -1,7 +1,7 @@
 # QA
 
 Live: https://carousel-hero-nu.vercel.app
-Checked 2026-10-15. Headless Chrome 141 drove every check below and read the results from the DOM, not from screenshots alone.
+Checked 2026-10-15. Headless Chrome 155 drove every check below and read the results from the DOM, not from screenshots alone.
 
 ## Lighthouse (live site, two runs each)
 
