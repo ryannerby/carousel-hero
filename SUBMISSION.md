@@ -24,7 +24,7 @@ It's built to sit on oncarousel.com: your type, colours, keycaps and LIVE ticker
 - **Where the AI was wrong (3): it judged visual fixes by eye.** A seam where her head layer meets her body was "fixed" twice from small screenshots and was still visible. The third time it built a checker that scores every gaze frame for ghosting and shading steps. The checker found the seam was worst on two specific looks; switching to multi-band blending and re-generating one frame fixed it. All nine looks now measure at the noise floor.
 - **Where the AI was wrong (4): a colour grade meant to make her face pop turned her orange.** I reverted the grade and kept the part that helped: a 2x image set, because the 1x image was being stretched on retina screens.
 - **Measure, don't assume.** The cut-out tool dropped her folder pile, which only showed up when transparency was measured region by region. Gold buttons painted at fixed positions landed beside the real buttons in some frames, because her arm moves up to 85px between renders, so each button is now located frame by frame. The AI also once wrote invented timestamps into its own log; every number in the log now comes from a tool.
-- **Time, honestly:** about four and a half hours, well over the 45 to 60 minutes. Most of it went into the character and the gaze effect.
+- **Time:** about four and a half hours, past your 45 to 60 minute guide, and that was a choice. The page structure and copy are the hour-sized part. The rest went into the character and her gaze effect, because on your site the character is what makes the page.
 
 ## QA note
 
