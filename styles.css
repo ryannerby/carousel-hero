@@ -106,11 +106,11 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 
 .sub {
-  margin: 22px 0 0; max-width: 32rem;
+  margin: 20px 0 0; max-width: 32rem;
   font-size: var(--lede); line-height: 1.45; color: var(--ink-soft); text-wrap: pretty;
 }
 
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 30px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 32px; }
 
 /* Chunky keyboard-key button, Carousel's closing-CTA treatment */
 .btn-key {
@@ -129,7 +129,8 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 }
 .text-link:hover { text-decoration-color: var(--ink); }
 
-.quote { margin: 34px 0 0; max-width: 30rem; }
+.proof { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin-top: 30px; }
+.quote { margin: 0; max-width: 26rem; flex: 1 1 18rem; }
 .quote blockquote { margin: 0; }
 .quote p {
   margin: 0; font-family: var(--serif); font-style: italic;
@@ -142,7 +143,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
 
 /* Gold laurel award, after Carousel's "$400M" badge (we use a figure they publish
    consistently; their $400M and LinkedIn's $175M disagree, so we don't quote it) */
-.laurel { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; }
+.laurel { display: inline-flex; align-items: center; gap: 10px; flex: none; }
 .laurel .branch { width: 18px; height: 50px; }
 .laurel .flip { transform: scaleX(-1); }
 .laurel p { margin: 0; text-align: center; line-height: 1; }
@@ -157,22 +158,78 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
-/* The character: stands on the ticker, cut heel runs off the right edge */
-.visual { position: relative; min-height: 420px; }
-.visual img {
-  position: absolute; bottom: 0; right: -6%;
-  height: 112%; width: auto; max-width: none;
-  pointer-events: none;
+/* The character. Body layer with a hole where the head goes + one head crop per gaze,
+   after Carousel's Pile Lady (see brand-study/BRAND-STUDY.md, Interaction layer). The head
+   box is in % of the figure, read from assets/lady/states.json, so it tracks any size. */
+.visual { position: relative; min-height: 460px; }
+.lady {
+  position: absolute; bottom: 0; left: 50%;
+  height: 100%; aspect-ratio: 1728 / 2304;
+  transform: translateX(-56%);
+  perspective: 1400px;
 }
 @media (min-width: 860px) {
   .visual { min-height: 0; }
-  .visual img { right: -3%; height: 104%; }
+  .lady { height: 104%; left: auto; right: 2%; transform: none; }
 }
+.lady-tilt {
+  position: absolute; inset: 0;
+  transform-origin: 62% 30%;
+  transform: rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg));
+  will-change: transform;
+}
+.lady-body { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lady-head { position: absolute; left: 17.824%; top: 4.774%; width: 41.667%; height: 30.816%; } /* from assets/lady/states.json */
+.lady-head img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+.lady-head img.is-on { opacity: 1; } /* hard cut, as Carousel's: the tilt carries the motion */
+.lady img { pointer-events: none; user-select: none; -webkit-user-drag: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .visual img { animation: rise 700ms cubic-bezier(.2,.7,.2,1) both; }
-  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .lady { animation: rise 700ms cubic-bezier(.2,.7,.2,1) both; }
+  .lady.is-poke .lady-tilt { animation: poke 380ms cubic-bezier(.3,1.6,.5,1); }
+  @keyframes rise { from { opacity: 0; translate: 0 24px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes poke { 40% { translate: 0 -10px; } }
 }
 .no-image .visual { display: none; }
+
+/* Keycaps: press one to show that step in the headline; hover hops, like Carousel's keys */
+.keys { display: flex; gap: 16px; margin-top: 24px; }
+.key {
+  display: grid; justify-items: center; gap: 9px;
+  padding: 0; border: 0; background: none; cursor: pointer; color: inherit;
+  font: inherit; -webkit-tap-highlight-color: transparent;
+}
+.key:focus-visible { outline: none; }
+.key:focus-visible .cap { outline: 2px solid var(--acc); outline-offset: 4px; }
+.cap {
+  --face1: #fdf9ef; --face2: #e6ddc8; --edge: #cbbfa4; --ink-icon: #4a4237;
+  display: grid; place-items: center; width: 60px; height: 54px; border-radius: 13px;
+  background: linear-gradient(180deg, var(--face1), var(--face2));
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.75), inset 0 -3px 0 rgba(0,0,0,.07),
+              0 6px 0 var(--edge), 0 14px 18px -8px rgba(26,23,20,.38);
+  color: var(--ink-icon);
+  transition: transform 220ms cubic-bezier(.3,1.6,.5,1), box-shadow 160ms ease;
+}
+.key-cream .cap { --edge: #c9bd9f; }
+.key-gold .cap  { --face1: #f6dc94; --face2: #b9903c; --edge: #87661f; --ink-icon: #4f3a10; }
+.key-ink .cap   { --face1: #45403a; --face2: #16130f; --edge: #000; --ink-icon: #faf9f5; }
+.cap svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.key-label {
+  padding: 3px 9px; border-radius: 5px; border: 1px solid var(--line-2);
+  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft); background: #fff;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.key[aria-pressed="true"] .key-label { background: #0e1a5c; border-color: #0e1a5c; color: #fff; }
+.key[aria-pressed="true"] .cap {
+  transform: translateY(4px);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -2px 0 rgba(0,0,0,.08),
+              0 2px 0 var(--edge), 0 6px 10px -6px rgba(26,23,20,.4);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .key:hover .cap { transform: translateY(-6px); }
+  .key[aria-pressed="true"]:hover .cap { transform: translateY(2px); }
+}
+.key:active .cap { transform: translateY(5px); box-shadow: inset 0 2px 0 rgba(255,255,255,.5), 0 1px 0 var(--edge), 0 4px 8px -6px rgba(26,23,20,.4); }
 
 /* Mono ticker, after Carousel's "LIVE" strip */
 .ticker {
