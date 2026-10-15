@@ -13,10 +13,10 @@ Checked 2026-10-15. Headless Chrome 155 drove every check below and read the res
 Desktop: first paint 0.3s, largest paint 0.6s. Mobile: first paint 1.0s, largest paint 2.9s. Layout shift 0 on both.
 
 What moved the numbers:
-- Gold laurel text was 3.2:1 on cream. Darkened to Carousel's own dark foil stop (#8A6B24), 4.7:1. Accessibility 96 to 100.
+- Gold laurel text was 3.2:1 on cream. Darkened to your own dark foil stop (#8A6B24), 4.7:1. Accessibility 96 to 100.
 - Phones were downloading the 2x figure. Switched to width-based `srcset` + `sizes`; phones get the 1x file.
 - Keycap PNGs were 151px wide, shown at about 54px. Now 112px WebP with width and height set.
-- Google Fonts made the browser fetch a stylesheet, then the fonts, before drawing text. Self-hosted the Latin subsets with preloads, as oncarousel.com does. Mobile first paint 3.4s to 1.0s, performance 81 to 92-95.
+- Google Fonts made the browser fetch a stylesheet, then the fonts, before drawing text. Self-hosted the Latin subsets with preloads, as your site does. Mobile first paint 3.4s to 1.0s, performance 81 to 92-95.
 
 ## Layout (18 viewports)
 
@@ -49,6 +49,6 @@ iPhone, Safari, on the live link (2026-10-15, 18:15): hero centred, Book a demo 
 
 ## Known issues, not fixed
 
-- Her face is softer and less retouched than Carousel's hero. Matching that finish means regenerating her and her nine gaze frames; I chose to ship this one.
+- Her face is softer and less retouched than your hero. Matching that finish means regenerating her and her nine gaze frames; I chose to ship this one.
 - Lighthouse still lists unminified CSS/JS (a few KB, served compressed by Vercel) and "properly size images" on the 2x figure for very large screens.
 - The second vertical has copy but no character or card yet.
