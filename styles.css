@@ -188,7 +188,7 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
    size container; the figure is up to 1.6x the column wide (min(100cqh, 121cqw)), anchored right and pushed
    8% past the edge, so the mound runs off the screen on the right and fades out under the copy on the
    left, while she stays inside the column. Phones: full width, mound edge to edge. */
-.visual { position: relative; height: min(100vw, 58svh, 520px); margin-top: -8px; } /* narrow layouts: capped, so she never outgrows the screen (tablets, zoomed desktop) */
+.visual { position: relative; height: min(100vw, 58svh, 520px); margin-top: clamp(-56px, -6vw, -24px); } /* narrow layouts: capped, so she never outgrows the screen (tablets, zoomed desktop) */
 .lady {
   position: absolute; bottom: 0; left: 50%; height: 100%;
   aspect-ratio: 2352 / 1776; transform: translateX(-50%); /* phone: zoomed ~1.3x, mound trimmed at the sides */
