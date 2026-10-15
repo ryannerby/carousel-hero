@@ -18,7 +18,7 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* ---------- 1. vertical template ---------- */
 function render() {
   document.documentElement.dataset.vertical = slug;
-  document.title = `${v.lead} while they ${v.rotate[1]} · Carousel`;
+  document.title = `${v.lead} while they ${v.rotate[0]} · Carousel for ${v.tag.replace(/^For /, "")}`;
   $("[data-slot=nav-vertical]").textContent = v.label;
   $("[data-slot=tag]").textContent = v.tag;
   $("[data-slot=lead]").textContent = v.lead;

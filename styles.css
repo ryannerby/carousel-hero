@@ -399,3 +399,14 @@ a:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
   letter-spacing: -0.01em; text-transform: none; color: var(--ink); }
 .ticker-track li.t-co img { height: 16px; width: auto; display: block; }
 .ticker-track li.t-co img[alt="Canacap"] { height: 13px; }
+
+/* Stacked layouts (she sits below the copy): centre everything, as Carousel's vertical heroes do.
+   Each rotating phrase and its underline centre inside the rotor box (sized to the longest phrase). */
+@media (max-width: 859px) {
+  .copy { text-align: center; }
+  .sub, .quote { margin-left: auto; margin-right: auto; }
+  .actions { justify-content: center; }
+  .proof { align-items: center; }
+  .rotor-clip em { justify-self: center; }
+  .rotor::after { left: 50%; translate: -50% 0; }
+}

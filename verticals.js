@@ -10,7 +10,7 @@ export const VERTICALS = {
     lead: "Clear the stips",
     rotate: ["scan their ID", "connect their bank", "prove their address", "confirm their job", "sign the consent"],
     keys: ["ID", "Bank", "Address", "Job", "Credit"], // one keycap per phrase, same order
-    sub: "Your buyer verifies on their own phone. You send the lender one decision-ready file.",
+    sub: "Your buyer verifies on their phone at your desk. The lender gets one decision-ready file before they leave the lot.",
     cta: { label: "Book a demo", href: "https://oncarousel.com/book-a-demo/" },
     secondary: { label: "See a sample report", href: "https://oncarousel.com/assets/sample/screening-report-example.pdf" },
     quote: {
